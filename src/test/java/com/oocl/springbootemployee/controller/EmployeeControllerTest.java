@@ -106,43 +106,43 @@ class EmployeeControllerTest {
                 .value(containsInAnyOrder(femaleEmployee.getSalary(), femaleEmployee2.getSalary())));
     }
 
-//    @Test
-//    void should_create_employee_success() throws Exception {
-//        // Given
-//        employeeInMemoryRepository.findAll().clear();
-//        String givenName = "New Employee";
-//        Integer givenAge = 18;
-//        Gender givenGender = Gender.FEMALE;
-//        Double givenSalary = 5000.0;
-//        String givenEmployee = String.format(
-//            "{\"name\": \"%s\", \"age\": \"%s\", \"gender\": \"%s\", \"salary\": \"%s\"}",
-//            givenName,
-//            givenAge,
-//            givenGender,
-//            givenSalary
-//        );
-//
-//        // When
-//        // Then
-//        client.perform(MockMvcRequestBuilders.post("/employees")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(givenEmployee)
-//            )
-//            .andExpect(MockMvcResultMatchers.status().isCreated())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenName))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(givenAge))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(givenGender.name()))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenSalary));
-//        List<Employee> employees = employeeInMemoryRepository.findAll();
-//        assertThat(employees).hasSize(1);
+    @Test
+    void should_create_employee_success() throws Exception {
+        // Given
+        employeeJpaRepository.deleteAll();
+        String givenName = "New Employee";
+        Integer givenAge = 18;
+        Gender givenGender = Gender.FEMALE;
+        Double givenSalary = 5000.0;
+        String givenEmployee = String.format(
+            "{\"name\": \"%s\", \"age\": \"%s\", \"gender\": \"%s\", \"salary\": \"%s\"}",
+            givenName,
+            givenAge,
+            givenGender,
+            givenSalary
+        );
+
+        // When
+        // Then
+        client.perform(MockMvcRequestBuilders.post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(givenEmployee)
+            )
+            .andExpect(MockMvcResultMatchers.status().isCreated())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNumber())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenName))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(givenAge))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(givenGender.name()))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenSalary));
+        List<Employee> employees = employeeJpaRepository.findAll();
+        assertThat(employees).hasSize(1);
 //        assertThat(employees.get(0).getId()).isEqualTo(1);
-//        assertThat(employees.get(0).getName()).isEqualTo(givenName);
-//        assertThat(employees.get(0).getAge()).isEqualTo(givenAge);
-//        assertThat(employees.get(0).getGender()).isEqualTo(givenGender);
-//        assertThat(employees.get(0).getSalary()).isEqualTo(givenSalary);
-//    }
-//
+        assertThat(employees.get(0).getName()).isEqualTo(givenName);
+        assertThat(employees.get(0).getAge()).isEqualTo(givenAge);
+        assertThat(employees.get(0).getGender()).isEqualTo(givenGender);
+        assertThat(employees.get(0).getSalary()).isEqualTo(givenSalary);
+    }
+
 //    @Test
 //    void should_update_employee_success() throws Exception {
 //        // Given
