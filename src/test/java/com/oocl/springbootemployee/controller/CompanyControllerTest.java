@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
 import com.oocl.springbootemployee.model.Company;
 import com.oocl.springbootemployee.model.Employee;
@@ -145,53 +146,53 @@ class CompanyControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(companyGiven.getId()))
             .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(companyGiven.getName()));
     }
-//
-//    @Test
-//    void should_return_created_company() throws Exception {
-//        //Given
-//        var givenName = "New Company";
-//        String requestBody = String.format("{\"name\": \"%s\" }", givenName);
-//
-//        // When
-//        // Then
-//        client.perform(
-//                MockMvcRequestBuilders.post("/companies")
-//                    .contentType(MediaType.APPLICATION_JSON)
-//                    .content(requestBody))
-//            .andExpect(MockMvcResultMatchers.status().isCreated())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenName));
-//    }
-//
-//    @Test
-//    void should_return_updated_company_when_update_with_id_and_data() throws Exception {
-//        // Given
-//        var idToUpdate = techcom_solutions.getId();
-//        var nameToUpdate = "New Name";
-//        String requestBody = String.format("{\"name\": \"%s\" }", nameToUpdate);
-//
-//        // When
-//        // Then
-//        client.perform(MockMvcRequestBuilders.put("/companies/" + idToUpdate)
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(requestBody))
-//            .andExpect(MockMvcResultMatchers.status().isOk())
-//            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(idToUpdate))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(nameToUpdate));
-//    }
-//
-//    @Test
-//    void should_return_no_content_when_delete() throws Exception {
-//        // Given
-//        var toDeleteCompanyId = nexus_industries.getId();
-//
-//        // When
-//        final var result =
-//            client.perform(MockMvcRequestBuilders.delete("/companies/" + toDeleteCompanyId)).andReturn();
-//
-//        // Then
-//        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
-//        assertThat(companyRepository.findAll()).hasSize(4);
-//    }
+
+    @Test
+    void should_return_created_company() throws Exception {
+        //Given
+        var givenName = "New Company";
+        String requestBody = String.format("{\"name\": \"%s\" }", givenName);
+
+        // When
+        // Then
+        client.perform(
+                MockMvcRequestBuilders.post("/companies")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(requestBody))
+            .andExpect(MockMvcResultMatchers.status().isCreated())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").isNotEmpty())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenName));
+    }
+
+    @Test
+    void should_return_updated_company_when_update_with_id_and_data() throws Exception {
+        // Given
+        var idToUpdate = techcom_solutions.getId();
+        var nameToUpdate = "New Name";
+        String requestBody = String.format("{\"name\": \"%s\" }", nameToUpdate);
+
+        // When
+        // Then
+        client.perform(MockMvcRequestBuilders.put("/companies/" + idToUpdate)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestBody))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(idToUpdate))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(nameToUpdate));
+    }
+
+    @Test
+    void should_return_no_content_when_delete() throws Exception {
+        // Given
+        var toDeleteCompanyId = nexus_industries.getId();
+
+        // When
+        final var result =
+            client.perform(MockMvcRequestBuilders.delete("/companies/" + toDeleteCompanyId)).andReturn();
+
+        // Then
+        assertThat(result.getResponse().getStatus()).isEqualTo(HttpStatus.NO_CONTENT.value());
+        assertThat(companyJpaRepository.findAll()).hasSize(4);
+    }
 }
