@@ -62,6 +62,7 @@ public class EmployeeController {
 
     @GetMapping(params = {"pageIndex", "pageSize"})
     public List<Employee> getAllByPageSize(@RequestParam Integer pageIndex, @RequestParam Integer pageSize){
-        return employeeService.findAll(pageIndex, pageSize);
+        List<Employee> all = employeeService.findAll(pageIndex, pageSize);
+        return all;
     }
 }
