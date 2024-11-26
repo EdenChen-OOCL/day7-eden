@@ -36,7 +36,7 @@ public class CompanyService {
 
 
     public List<Employee> getEmployeesByCompanyId(Integer id) {
-        Company company = companyInMemoryRepository.findById(id);
+        Company company = companyJpaRepository.findById(id).orElse(null);
         return company.getEmployees();
     }
 
