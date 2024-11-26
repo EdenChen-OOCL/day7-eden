@@ -40,7 +40,6 @@ class EmployeeControllerTest {
 
     @BeforeEach
     void setUp() {
-//        employeeRepository.findAll().clear();
         employeeJpaRepository.deleteAll();
         employeeJpaRepository.save(new Employee(1, "John Smith", 32, Gender.MALE, 5000.0));
         employeeJpaRepository.save(new Employee(2, "Jane Johnson", 28, Gender.FEMALE, 6000.0));
@@ -66,22 +65,22 @@ class EmployeeControllerTest {
             .isEqualTo(givenEmployees);
     }
 
-//    @Test
-//    void should_return_employee_when_get_by_id() throws Exception {
-//        // Given
-//        final Employee givenEmployee = employeeInMemoryRepository.findAll().get(0);
-//
-//        // When
-//        // Then
-//        client.perform(MockMvcRequestBuilders.get("/employees/1"))
-//            .andExpect(MockMvcResultMatchers.status().isOk())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(givenEmployee.getId()))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenEmployee.getName()))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(givenEmployee.getAge()))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(givenEmployee.getGender().name()))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenEmployee.getSalary()));
-//    }
-//
+    @Test
+    void should_return_employee_when_get_by_id() throws Exception {
+        // Given
+        final Employee givenEmployee = employeeJpaRepository.findAll().get(0);
+
+        // When
+        // Then
+        client.perform(MockMvcRequestBuilders.get("/employees/" + givenEmployee.getId()))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(givenEmployee.getId()))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(givenEmployee.getName()))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(givenEmployee.getAge()))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.gender").value(givenEmployee.getGender().name()))
+            .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenEmployee.getSalary()));
+    }
+
 //
 //    @Test
 //    void should_return_employees_when_get_by_gender() throws Exception {

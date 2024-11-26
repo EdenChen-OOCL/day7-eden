@@ -12,15 +12,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
     private final EmployeeInMemoryRepository employeeInMemoryRepository;
-    private final EmployeeRepository employeeRepository;
+    private final EmployeeRepository employeeJpaRepository;
 
-    public EmployeeService(EmployeeInMemoryRepository employeeInMemoryRepository, EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeInMemoryRepository employeeInMemoryRepository, EmployeeRepository employeeJpaRepository) {
         this.employeeInMemoryRepository = employeeInMemoryRepository;
-        this.employeeRepository = employeeRepository;
+        this.employeeJpaRepository = employeeJpaRepository;
     }
 
     public List<Employee> findAll() {
-        return employeeRepository.findAll();
+        return employeeJpaRepository.findAll();
     }
 
     public List<Employee> findAll(Gender gender) {
@@ -32,7 +32,8 @@ public class EmployeeService {
     }
 
     public Employee findById(Integer employeeId) {
-        return employeeInMemoryRepository.findById(employeeId);
+        return employeeJpaRepository.findById(employeeId)
+                .orElse(null);
     }
 
     public Employee create(Employee employee) {
@@ -42,7 +43,7 @@ public class EmployeeService {
             throw new EmployeeAgeSalaryNotMatchedException();
 
         employee.setActive(true);
-        return employeeRepository.save(employee);
+        return employeeJpaRepository.save(employee);
     }
 
     public Employee update(Integer employeeId , Employee employee) {
