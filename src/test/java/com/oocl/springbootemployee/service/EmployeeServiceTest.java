@@ -25,7 +25,7 @@ class EmployeeServiceTest {
     private EmployeeInMemoryRepository mockedInMemoryEmployeeRepository;
 
     @Mock
-    private EmployeeRepository mockeJpaRepository;
+    private EmployeeRepository mockJpaRepository;
 
     @InjectMocks
     private EmployeeService employeeService;
@@ -33,7 +33,7 @@ class EmployeeServiceTest {
     @Test
     void should_return_the_given_employees_when_getAllEmployees() {
         //given
-        when(mockeJpaRepository.findAll()).thenReturn(List.of(new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0)));
+        when(mockJpaRepository.findAll()).thenReturn(List.of(new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0)));
 
         //when
         List<Employee> allEmployees = employeeService.findAll();
@@ -43,21 +43,19 @@ class EmployeeServiceTest {
         assertEquals("Lucy", allEmployees.get(0).getName());
     }
 
-//    @Test
-//    void should_return_the_created_employee_when_create_given_a_employee() {
-//        //given
-//        EmployeeInMemoryRepository mockedEmployeeRepository = mock(EmployeeInMemoryRepository.class);
-//        Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
-//        when(mockedEmployeeRepository.create(any())).thenReturn(lucy);
-//        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-//
-//        //when
-//        Employee createdEmployee = employeeService.create(lucy);
-//
-//        //then
-//        assertEquals("Lucy", createdEmployee.getName());
-//    }
-//
+    @Test
+    void should_return_the_created_employee_when_create_given_a_employee() {
+        //given
+        Employee lucy = new Employee(1, "Lucy", 18, Gender.FEMALE, 8000.0);
+        when(mockJpaRepository.save(any())).thenReturn(lucy);
+
+        //when
+        Employee createdEmployee = employeeService.create(lucy);
+
+        //then
+        assertEquals("Lucy", createdEmployee.getName());
+    }
+
 //    @Test
 //    void should_throw_EmployeeAgeNotValidException_when_create_given_a_employee_with_age_17() {
 //        //given
