@@ -8,6 +8,7 @@ import com.oocl.springbootemployee.model.Gender;
 import com.oocl.springbootemployee.repository.EmployeeInMemoryRepository;
 import com.oocl.springbootemployee.repository.EmployeeRepository;
 import java.util.List;
+import java.util.Objects;
 import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
@@ -47,11 +48,12 @@ public class EmployeeService {
     }
 
     public Employee update(Integer employeeId , Employee employee) {
-        Employee employeeExisted = employeeInMemoryRepository.findById(employeeId);
-        if(!employeeExisted.getActive())
+        Employee employeeExisted = employeeJpaRepository.findById(employeeId).orElse(null);
+        if(Objects.isNull(employeeExisted) || !employeeExisted.getActive())
             throw new EmployeeInactiveException();
 
-        return employeeInMemoryRepository.update(employeeId, employee);
+        employee.setId(employeeId);
+        return employeeJpaRepository.save(employee);
     }
 
     public void delete(Integer employeeId) {
