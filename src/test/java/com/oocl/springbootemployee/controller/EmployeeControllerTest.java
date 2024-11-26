@@ -81,31 +81,31 @@ class EmployeeControllerTest {
             .andExpect(MockMvcResultMatchers.jsonPath("$.salary").value(givenEmployee.getSalary()));
     }
 
-//
-//    @Test
-//    void should_return_employees_when_get_by_gender() throws Exception {
-//        // Given
-//        Employee femaleEmployee = employeeInMemoryRepository.findAll().get(1);
-//        Employee femaleEmployee2 = employeeInMemoryRepository.findAll().get(3);
-//
-//        // When
-//        // Then
-//        client.perform(MockMvcRequestBuilders.get("/employees")
-//                .param("gender", "FEMALE"))
-//            .andExpect(MockMvcResultMatchers.status().isOk())
-//            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$[*].id")
-//                .value(containsInAnyOrder(femaleEmployee.getId(), femaleEmployee2.getId())))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$[*].name")
-//                .value(containsInAnyOrder(femaleEmployee.getName(), femaleEmployee2.getName())))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$[*].age")
-//                .value(containsInAnyOrder(femaleEmployee.getAge(), femaleEmployee2.getAge())))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender")
-//                .value(containsInAnyOrder(femaleEmployee.getGender().name(), femaleEmployee2.getGender().name())))
-//            .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary")
-//                .value(containsInAnyOrder(femaleEmployee.getSalary(), femaleEmployee2.getSalary())));
-//    }
-//
+
+    @Test
+    void should_return_employees_when_get_by_gender() throws Exception {
+        // Given
+        Employee femaleEmployee = employeeJpaRepository.findAll().get(1);
+        Employee femaleEmployee2 = employeeJpaRepository.findAll().get(3);
+
+        // When
+        // Then
+        client.perform(MockMvcRequestBuilders.get("/employees")
+                .param("gender", "FEMALE"))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[*].id")
+                .value(containsInAnyOrder(femaleEmployee.getId(), femaleEmployee2.getId())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[*].name")
+                .value(containsInAnyOrder(femaleEmployee.getName(), femaleEmployee2.getName())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[*].age")
+                .value(containsInAnyOrder(femaleEmployee.getAge(), femaleEmployee2.getAge())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[*].gender")
+                .value(containsInAnyOrder(femaleEmployee.getGender().name(), femaleEmployee2.getGender().name())))
+            .andExpect(MockMvcResultMatchers.jsonPath("$[*].salary")
+                .value(containsInAnyOrder(femaleEmployee.getSalary(), femaleEmployee2.getSalary())));
+    }
+
 //    @Test
 //    void should_create_employee_success() throws Exception {
 //        // Given
