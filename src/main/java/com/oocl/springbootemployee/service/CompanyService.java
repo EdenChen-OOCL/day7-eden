@@ -7,6 +7,7 @@ import com.oocl.springbootemployee.repository.CompanyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,10 +16,12 @@ import java.util.List;
 public class CompanyService {
     private final CompanyInMemoryRepository companyInMemoryRepository;
     private final CompanyRepository companyJpaRepository;
+    private final JpaContext jpaContext;
 
-    public CompanyService(CompanyInMemoryRepository companyInMemoryRepository, CompanyRepository companyJpaRepository) {
+    public CompanyService(CompanyInMemoryRepository companyInMemoryRepository, CompanyRepository companyJpaRepository, JpaContext jpaContext) {
         this.companyInMemoryRepository = companyInMemoryRepository;
         this.companyJpaRepository = companyJpaRepository;
+        this.jpaContext = jpaContext;
     }
 
     public List<Company> findAll(){
@@ -31,7 +34,7 @@ public class CompanyService {
     }
 
     public Company findById(Integer id) {
-        return companyInMemoryRepository.findById(id);
+        return companyJpaRepository.findById(id).orElse(null);
     }
 
 
