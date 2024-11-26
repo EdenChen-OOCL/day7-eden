@@ -2,6 +2,7 @@ package com.oocl.springbootemployee.model;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -9,6 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Company {
@@ -16,7 +18,7 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "companyId")
     private List<Employee> employees = new ArrayList<>();
 
@@ -29,6 +31,11 @@ public class Company {
     public Company(Integer id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public Company(String name, List<Employee> employees) {
+        this.name = name;
+        this.employees = employees;
     }
 
     public Company() {}

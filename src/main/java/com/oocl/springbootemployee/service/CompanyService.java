@@ -2,6 +2,7 @@ package com.oocl.springbootemployee.service;
 
 import com.oocl.springbootemployee.model.Company;
 import com.oocl.springbootemployee.model.Employee;
+import com.oocl.springbootemployee.repository.CompanyInMemoryRepository;
 import com.oocl.springbootemployee.repository.CompanyRepository;
 import org.springframework.stereotype.Service;
 
@@ -9,43 +10,45 @@ import java.util.List;
 
 @Service
 public class CompanyService {
-    private final CompanyRepository companyRepository;
+    private final CompanyInMemoryRepository companyInMemoryRepository;
+    private final CompanyRepository companyJpaRepository;
 
-    public CompanyService(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
+    public CompanyService(CompanyInMemoryRepository companyInMemoryRepository, CompanyRepository companyJpaRepository) {
+        this.companyInMemoryRepository = companyInMemoryRepository;
+        this.companyJpaRepository = companyJpaRepository;
     }
 
     public List<Company> findAll(){
-        return companyRepository.findAll();
+        return companyJpaRepository.findAll();
     }
 
     public List<Company> findAll(int pageIndex, int pageSize) {
-        List<Company> companiesInPage = companyRepository.getCompaniesByPagination(pageIndex, pageSize);
+        List<Company> companiesInPage = companyInMemoryRepository.getCompaniesByPagination(pageIndex, pageSize);
         return companiesInPage.stream().toList();
     }
 
     public Company findById(Integer id) {
-        return companyRepository.findById(id);
+        return companyInMemoryRepository.findById(id);
     }
 
 
     public List<Employee> getEmployeesByCompanyId(Integer id) {
-        Company company = companyRepository.findById(id);
+        Company company = companyInMemoryRepository.findById(id);
         return company.getEmployees();
     }
 
     public Company create(Company company) {
-        return companyRepository.addCompany(company);
+        return companyInMemoryRepository.addCompany(company);
     }
 
     public Company update(Integer id, Company company) {
-        final var companyNeedToUpdate = companyRepository
+        final var companyNeedToUpdate = companyInMemoryRepository
                 .findById(id);
 
         var nameToUpdate = company.getName() == null ? companyNeedToUpdate.getName() : company.getName();
         var employeesToUpdate = company.getEmployees() == null ? companyNeedToUpdate.getEmployees() : company.getEmployees();
 
         final var companyToUpdate = new Company(id,nameToUpdate,employeesToUpdate);
-        return companyRepository.updateCompany(id, companyToUpdate);
+        return companyInMemoryRepository.updateCompany(id, companyToUpdate);
     }
 }
